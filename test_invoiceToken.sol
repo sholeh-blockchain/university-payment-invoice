@@ -2,10 +2,10 @@
 
 pragma solidity ^0.8.0;
 
-//import "@openzeppelin/contracts/access/Ownable.sol";
-//import "./idrtToken.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "./idrtToken.sol";
 
-contract Invoice {
+contract Invoice is Ownable, idrtToken{
     string public nim;
     string  name;
     uint public invoiceAmount;
@@ -13,7 +13,7 @@ contract Invoice {
     uint public typePayment; //teype pembayaran, spp atau her regis
     address  owner;
     
-   mapping(address => uint) balances;
+   //mapping(address => uint) balances;
     
     
     constructor(uint _invoiceAmount, string memory _nim, string memory _name) {
