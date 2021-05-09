@@ -2,18 +2,18 @@
 
 pragma solidity ^0.8.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./idrtToken.sol";
 
-contract Invoice is OOwnable, idrtToken {
+contract Invoice is Ownable, idrtToken{
     string public nim;
-    string public name;
+    string  name;
     uint public invoiceAmount;
     uint public dueDate;
     uint public typePayment; //teype pembayaran, spp atau her regis
-    address public owner;
+    address  owner;
     
-    mapping(address => uint) balances;
+   //mapping(address => uint) balances;
     
     
     constructor(uint _invoiceAmount, string memory _nim, string memory _name) {
@@ -24,48 +24,36 @@ contract Invoice is OOwnable, idrtToken {
         owner = msg.sender;
     } 
     
-    
-    // event invoiceEvent(address from, uint amount);
-    
-    // modifier minAmount(amount) {
-    //     rerequire(msg.value >= invoiceAmount);
-    //}
-    
-    fallback () payable external {
-        require(msg.value == invoiceAmount, "payment invoice amount");
-    }
-    
-    function transfer() public payable {
-        balances[msg.sender] = msg.value;
-    }
-    
-    function transferIdrt() public payable
-        balances[msg.sender].invoiceAmount += msg.value;
-        
-    }
-    
-    function getBalance() public view returns(uint balbalance) {
-        return balances[msg.sender];
-    }
-//   function addInvoice(address received, uint amount) public {
-//       re
-//   }
-    
-    // function getContratBalance() public view returns (uint) {
-    //     return address(this).balance;
+    // function addInvoice (address receiver, uint invoiceAmount) public {
+    //     require(msg.sender == owner);
+    //     require(invoiceAmount < 1e60);
+    //     balances[receiver] += invoiceAmount;
     // }
+    fallback () payable external {
+        require(
+            msg.value==invoiceAmount, "payment invoice amount");
+    }
+    
+    function getContractBalance() public view returns(uint) {
+        return address(this).balance;
+    }
     
     function withdraw() public {
-        require(msg.sender ==owner, "only withdraw payment");
-        require(block.timestamp > dueDate, "due date reached");
-       payable(msg.sender).transfer(address(this).balance);
+        require(
+            msg.sender == owner, "only widraw payment");
+        require(
+            block.timestamp > dueDate, "due data not been reached");
+        payable(msg.sender).transfer(address(this).balance);
     }
+        
+    // function setPrice(uint _invoiceAmount) public{
+    //     invoiceAmount = _invoiceAmount;
+    // }
     
-   // function addInvoice()
-   
     
-    //function widraw 
-    
+    //Tambah Function Untuk buat Invoice
+    //Tambah Smart Contract Baru Invoice
+    //Withdraw Salah
     
     
     
